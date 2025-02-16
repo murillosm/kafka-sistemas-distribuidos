@@ -24,17 +24,17 @@ public class ComsumoKafka {
         try (KafkaConsumer<String, String> consumer = new KafkaConsumer<String, String>(properties)) {
             consumer.subscribe(Arrays.asList("topic1"));
 
-//            while (true) {
-//                ConsumerRecords<String, String> records = consumer.poll(Duration.ofSeconds(1));
-//                for (ConsumerRecord<String, String>  record: records) {
-//                    System.out.println(record.value());
-//                }
-//            }
-
-            ConsumerRecords<String, String> records = consumer.poll(Duration.ofSeconds(1));
-            for (ConsumerRecord<String, String>  record: records) {
-                System.out.println(record.value());
+            while (true) {
+                ConsumerRecords<String, String> records = consumer.poll(Duration.ofSeconds(1));
+                for (ConsumerRecord<String, String>  record: records) {
+                    System.out.println(record.value());
+                }
             }
+
+//            ConsumerRecords<String, String> records = consumer.poll(Duration.ofSeconds(1));
+//            for (ConsumerRecord<String, String>  record: records) {
+//                System.out.println(record.value());
+//            }
         }
         //System.out.println("Fim do programa");
     }
