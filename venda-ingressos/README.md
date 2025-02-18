@@ -1,1 +1,0 @@
-# kafka-sistemas-distribuidos

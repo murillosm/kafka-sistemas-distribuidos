@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "kafka-stock-simulation"
+version = "0.1.0"
+description = ""
+authors = ["Vaugtro <victor.agustgm@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+kafka-python = "^2.0.3"
+kazoo = "^2.10.0"
+plotly = "^6.0.0"
+pandas = "^2.2.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
