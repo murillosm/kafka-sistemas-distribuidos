@@ -8,18 +8,26 @@ from kazoo.client import KazooClient
 
 from util import STOCKS
 
+# Configura o KafkaProducer para se conectar ao servidor Kafka.
+# Configura o KazooClient para se conectar ao Zookeeper.
+
 PRODUCER = KafkaProducer(bootstrap_servers='localhost:19092', value_serializer=lambda v: json.dumps(v).encode('utf-8'))
 
 ZK = KazooClient(hosts='localhost:2181')
 ZK.start()
-
-
+ 
+# Cria nós no Zookeeper para cada ação na lista STOCKS com um valor inicial aleatório.
 for stock in STOCKS:
     try:
         ZK.create(f'/stock/{stock}', value=str(uniform(1000, 9000)).encode(), makepath=True)
     except Exception as e:
         print(e)
 
+
+
+# Gera transações de compra e venda de ações aleatoriamente.
+# Atualiza o valor da ação no Zookeeper.
+# Envia a transação para o Kafka.
 def produce_transaction():
     trade_type = ['buy', 'sell']
     
@@ -44,6 +52,8 @@ def produce_transaction():
         PRODUCER.send(f'transaction_{stock}', value=transaction)
         print(f"Produced: {transaction}")
         sleep(uniform(0.1, 1))
-        
+
+
+# Inicia a produção de transações quando o script é executado.        
 if __name__ == '__main__':
     produce_transaction()
